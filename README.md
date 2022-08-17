@@ -20,7 +20,8 @@ As a initial setup we will create /User and /Group scim postings for all active 
 
 #### UML: Cronjob CBA Updater
 
-![Design](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/HarryKodden/cba-scim/assets/design.iuml)
+![Design]((http://www.plantuml.com/plantuml/proxy?cache=no&src=assets/design.iuml)
+)
 
 ## Work breakdown
 
