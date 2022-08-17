@@ -28,8 +28,6 @@ services:
       - localnet
     links:
       - db
-    depends_on:
-      - db
 
   rabbit:
     image: "rabbitmq:management"
@@ -74,16 +72,14 @@ services:
     links:
       - db
       - rabbit
-    depends_on:
-      - db
-      - rabbit
 
   cba-scim:
     build: .
     container_name: cba-scim
     hostname: cba-scim
-    volumes:
-      - ./sync:/root/sync
+    #   During development this might be handy to uncomment...
+    #   volumes:
+    #     - ./sync:/root/sync
     networks:
       - localnet
     links:
