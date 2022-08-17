@@ -1,0 +1,3 @@
+[submodule "go-scim"]
+	path = go-scim
+	url = https://github.com/imulab/go-scim.git
