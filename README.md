@@ -20,38 +20,7 @@ As a initial setup we will create /User and /Group scim postings for all active 
 
 #### UML: Cronjob CBA Updater
 
-```plantuml
-
-database sram_ldap
-control cronjob as job
-
-
-group cronjob [ interval based execution]
-  job <-- sram_ldap: Read actual Groups and Users details
-  job <-- CBA: GET  https://cba.example.com/Users
-  job <-- CBA: GET  https://cba.example.com/Groups
-
-    loop for each CBA user: {__U__}
-      alt not exists (anymore) in LDAP
-      job -> CBA: PATCH https://cba.example.com/Users/{__U__} { 'active': False }
-      end
-    end
-
-    loop for each CBA group: {__G__}
-      alt not exists (anymore) in LDAP
-      job -> CBA: DELETE https://cba.example.com/Groups/{__G__}
-      end
-    end
-
-    loop for each LDAP user {__U__} "Create/Update"
-      job -> CBA: POST https://cba.example.com/Users { .. user attributes ..}
-    end
-
-    loop for each LDAP Group {__G__} "Create/Udate Members"
-      job -> CBA: POST https://cba.example.com/Users { .. members ..}
-    end
-end
-```
+![Design](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/HarryKodden/cba-scim/assets/design.iuml)
 
 ## Work breakdown
 
