@@ -18,9 +18,36 @@ The ambition is to adhere to the SCIM protocol and therefor the CBA platform wil
 
 As a initial setup we will create /User and /Group scim postings for all active user and group content every interval. (So no optimization during initial proof of concept)
 
-#### UML: Cronjob CBA Updater
+#### Main logic
 
-![Design](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/HarryKodden/cba-scim/main/assets/design.iuml)
+![Design](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/HarryKodden/cba-scim/main/assets/logic.iuml)
+
+#### Main components
+
+![Design](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/HarryKodden/cba-scim/main/assets/components.iuml)
+
+## Proof of Concept
+
+For the SCIM backend, the implementation is used
+The synchronization logic not doing any updates if there is no difference between the LDAP attributes and the already registered details in he SCIM backend. This way we minimize the I/O foot print to just LDAP Reads and SCIM Reads most of the time.
+
+### Example:
+
+Inital run
+
+```
+2022-08-17 08:24:44,696 INFO SYNC started at: 2022-08-17 08:24:44.696398
+2022-08-17 08:24:45,313 INFO Stats: {'reads': 15, 'writes': 12}
+2022-08-17 08:24:45,313 INFO SYNC completed at: 2022-08-17 08:24:44.696398
+```
+
+Second run
+
+```
+2022-08-17 08:25:48,951 INFO SYNC started at: 2022-08-17 08:25:48.951626
+2022-08-17 08:25:49,473 INFO Stats: {'reads': 27, 'writes': 0}
+2022-08-17 08:25:49,473 INFO SYNC completed at: 2022-08-17 08:25:48.951626
+```
 
 ## Work breakdown
 

@@ -1,0 +1,20 @@
+@startuml
+
+database "SRAM-LDAP" {
+  [Service Data]
+}
+
+
+package [SCIM] {
+  [Server]
+
+  database "MongoDB" {
+    [SCIM Data]
+  }
+}
+
+[Cronjob] <-- [Service Data]: Read / Only
+[Cronjob] <--> [Server]: Read / Write
+[Server] <-> [SCIM Data]
+
+@enduml
