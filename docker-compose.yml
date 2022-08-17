@@ -43,7 +43,10 @@ services:
       - "rabbitmq_data:/var/lib/rabbitmq"
 
   server:
-    image: "scim:latest"
+    #   image: "scim:latest"
+    build:
+      context: go-scim
+      dockerfile: ../Dockerfile.go-scim
     command: ["/usr/bin/scim", "api"]
     environment:
       - HTTP_PORT=8080

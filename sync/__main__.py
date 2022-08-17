@@ -23,8 +23,8 @@ def sync():
     start_time = datetime.now()
     logger.info("SYNC started at: {}".format(start_time))
 
-    with SCIM(os.environ.get(
-            'SCIM_SERVER', 'http://localhost'),
+    with SCIM(
+            os.environ.get('SCIM_SERVER', 'http://localhost'),
             os.environ.get('SCIM_BEARER', None),
             verify=(os.environ.get('SCIM_VERIFY', "True").upper() == 'TRUE')
         ) as my_scim:
@@ -72,9 +72,10 @@ def sync():
 
             for name, attributes in my_ldap.groups.items():
                 my_scim.add_group(name, [ my_scim.users[u]['id'] for u in attributes.get('member',[]) ])
-                
-        logger.info(f"Stats: {my_scim.stats}")
 
+            logger.info(f"LDAP Stats: {my_ldap.stats}")
+
+        logger.info(f"SCIM Stats: {my_scim.stats}")
 
     logger.info("SYNC completed at: {}".format(start_time))
 

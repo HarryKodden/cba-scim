@@ -36,6 +36,13 @@ class LDAP(object):
         self.people = {}
         self.groups = {}
 
+        self.stats = { 
+            'searches' : 0,
+            'reads' : 0
+        }
+
+        self.reads = 0
+
     def __enter__(self):
         self.get_people()
         self.get_groups()
@@ -60,16 +67,19 @@ class LDAP(object):
 
         result = {}
 
+        self.stats['searches'] += 1
+
         g = self.session.extend.standard.paged_search(
             search_base = base,
             search_filter = searchFilter,
             search_scope = searchScope,
             attributes = retrieveAttributes,
             paged_size = 5,
-            generator=True
+            generator = True
         )
 
         for i in g:
+            self.stats['reads'] += 1
             result[i['dn']] = self.attributes(i['attributes'])
 
         logger.debug(result)
