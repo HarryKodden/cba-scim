@@ -73,7 +73,7 @@ services:
       - 8080:8080
     links:
       - db
-    #    - rabbit
+      - rabbit
     depends_on:
       - db
       - rabbit
