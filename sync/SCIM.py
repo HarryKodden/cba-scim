@@ -98,20 +98,20 @@ class SCIM(object):
                   
       old_members = self.get_members(groupName)
 
-      for userName in old_members:
-        if userName not in new_members: 
+      for member in old_members:
+        if member not in new_members: 
           patches['Operations'].append({
               "op": "remove",
-              "path": f"members[value eq \"{userName}\"]"
+              "path": f"members[value eq \"{member}\"]"
           })
 
-        for userName in new_members:
-          if userName not in old_members:
+        for member in new_members:
+          if member not in old_members:
               patches['Operations'].append({
                   "op": "add",
                   "path": "members",
                   "value": [{
-                      "value": f"{userName}" 
+                      "value": f"{member}"
                   }]
               })
 
@@ -219,10 +219,13 @@ class SCIM(object):
     if userName in self.users:
       self.set_user(userName, {'active' : False} )
 
+    id = self.users[userName]['id']
+
     for groupName in self.groups:
       members = self.get_members(groupName)
-      if userName in members:
-        members.remove(userName)
+      
+      if id in members:
+        members.remove(id)
         self.set_members(groupName, members)
 
   # Group ...
