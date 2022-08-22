@@ -2,6 +2,12 @@
 
 This document explains the design to inform CBA on every update of CO-memberships for any CO that the CBA Service is connected with.
 
+References:
+
+- [RF 7642: System for Cross-domain Identity Management: Definitions, Overview, Concepts, and Requirements](https://www.rfc-editor.org/info/rfc7642)
+- [RFC 7644: System for Cross-domain Identity Management: Protocol](https://www.rfc-editor.org/info/rfc7644)
+- [SRAM](https://sram.surf.nl/landing)
+
 ## Design
 
 CBA will be implemented as a regular SRAM Service. The CO memberschip will be reflected in the SRAM LDAP subtree for this service.

@@ -4,9 +4,13 @@ database "SRAM-LDAP" {
   [Service Data]
 }
 
+package [CBA] {
+  [SCIM Client]
+}
 
-package [SCIM] {
-  [Server]
+package [SCIM-Service] {
+  [SCIM Server]
+  [Cronjob]
 
   database "MongoDB" {
     [SCIM Data]
@@ -14,7 +18,7 @@ package [SCIM] {
 }
 
 [Cronjob] <-- [Service Data]: Read / Only
-[Cronjob] <--> [Server]: Read / Write
-[Server] <-> [SCIM Data]
-
+[Cronjob] <--> [SCIM Server]: Read / Write
+[SCIM Server] <-> [SCIM Data]
+[SCIM Client] --> [SCIM Server] : Get Users / Groups
 @enduml
