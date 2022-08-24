@@ -30,7 +30,7 @@ As a initial setup we will create /User and /Group scim postings for all active 
 
 #### Main components
 
-![Components](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/HarryKodden/cba-scim/main/assets/components.iuml)
+![Components](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/HarryKodden/cba-scim/main/assets/components_new.iuml)
 
 ## Proof of Concept
 
