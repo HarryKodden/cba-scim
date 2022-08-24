@@ -26,11 +26,11 @@ As a initial setup we will create /User and /Group scim postings for all active 
 
 #### Main logic
 
-![Design](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/HarryKodden/cba-scim/main/assets/logic.iuml)
+![logic](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/HarryKodden/cba-scim/main/assets/logic.iuml)
 
 #### Main components
 
-![Design](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/HarryKodden/cba-scim/main/assets/components.iuml)
+![Components](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/HarryKodden/cba-scim/main/assets/components.iuml)
 
 ## Proof of Concept
 
