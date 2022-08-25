@@ -4,8 +4,7 @@ import ldap3 as ldap
 import json
 import logging
 
-logger = logging.getLogger('root')
-
+logger = logging.getLogger(__name__)
 
 class LDAP(object):
   
@@ -54,6 +53,9 @@ class LDAP(object):
 
     def __repr__(self):
         return json.dumps(self.json(), indent=4, sort_keys=True)
+
+    def get_stats(self):
+        return self.stats
 
     def json(self):
         return {

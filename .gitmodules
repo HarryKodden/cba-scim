@@ -1,3 +1,6 @@
 [submodule "go-scim"]
 	path = go-scim
 	url = https://github.com/imulab/go-scim.git
+[submodule "SCIM-Notify-demo"]
+	path = SCIM-Notify-demo
+	url = https://github.com/HarryKodden/SCIM-Notify-demo

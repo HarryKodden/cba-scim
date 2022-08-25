@@ -76,17 +76,18 @@ services:
       - db
       - rabbit
 
-  cba-scim:
-    build: .
-    container_name: cba-scim
-    hostname: cba-scim
-    #   During development this might be handy to uncomment...
-    #   volumes:
-    #     - ./sync:/root/sync
+  sram-sync:
+    build:
+      context: .
+      dockerfile: Dockerfile.sram-sync
+    container_name: sram-sync
+    hostname: sram-sync
+    restart: always
     networks:
       - localnet
     links:
       - server
+      - rabbit
     environment:
       LOG_LEVEL: INFO
 
@@ -107,6 +108,33 @@ services:
       SCIM_BEARER: ${SCIM_BEARER}
       SCIM_VERIFY: ${SCIM_VERIFY:-True}
 
+      BROKER_HOST: http://rabbit
+      BROKER_PORT: 15672
+      BROKER_USER: ${RABBIT_USERNAME}
+      BROKER_PASS: ${RABBIT_PASSWORD}
+
+      SERVICES: ${SERVICE_ENTITY_ID}=${SERVICE_PASSWORD}
+
+  cba:
+    build:
+      context: .
+      dockerfile: cba/Dockerfile
+    container_name: cba
+    hostname: cba
+    restart: always
+    networks:
+      - localnet
+    links:
+      - server
+      - rabbit
+    environment:
+      LOG_LEVEL: INFO
+
+      SCIM_SERVER: ${SCIM_SERVER:-http://server:8080}
+      SCIM_BEARER: ${SCIM_BEARER}
+      SCIM_VERIFY: ${SCIM_VERIFY:-True}
+
+      URI: amqp://${SERVICE_ENTITY_ID:-guest}:${SERVICE_PASSWORD:-guest}@rabbit:5672/${SERVICE_ENTITY_ID:-%2F}
 volumes:
   rabbitmq_data:
     driver: local

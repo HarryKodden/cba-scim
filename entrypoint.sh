@@ -4,6 +4,10 @@
 
 sed -i '/imklog/s/^/#/' /etc/rsyslog.conf
 
+# Prepare Broker...
+
+python3 /root/sync/broker.py
+
 # Prepare CRON...
 
 read -r -d '' CRONJOB <<- EOM
@@ -20,6 +24,7 @@ read -r -d '' CRONJOB <<- EOM
   SCIM_SERVER=${SCIM_SERVER}
   SCIM_BEARER='${SCIM_BEARER}'
   SCIM_VERIFY=${SCIM_VERIFY}
+  SERVICES='${SERVICES}'
   python3 /root/sync >> /var/log/sync.log 2>&1
 EOM
 crontab -l | { cat; echo "* * * * * "$CRONJOB; } | crontab -
