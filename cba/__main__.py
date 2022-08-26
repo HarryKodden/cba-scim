@@ -4,8 +4,7 @@ import os
 import logging
 
 from SCIM import SCIM
-
-from amqp import AMQP
+from AMQP import AMQP
 
 log_level = os.environ.get('LOG_LEVEL', 'ERROR')
 

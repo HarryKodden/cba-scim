@@ -46,7 +46,7 @@ services:
     #   image: "scim:latest"
     build:
       context: go-scim
-      dockerfile: ../Dockerfile.go-scim
+      dockerfile: ../docker/Dockerfile.scim
     command: ["/usr/bin/scim", "api"]
     environment:
       - HTTP_PORT=8080
@@ -71,17 +71,17 @@ services:
     networks:
       - localnet
     ports:
-      - 8080:8080
+      - ${SCIM_PORT:-80}:8080
     links:
       - db
       - rabbit
 
-  sram-sync:
+  sram:
     build:
       context: .
-      dockerfile: Dockerfile.sram-sync
-    container_name: sram-sync
-    hostname: sram-sync
+      dockerfile: docker/Dockerfile.sram
+    container_name: sram
+    hostname: sram
     restart: always
     networks:
       - localnet
@@ -118,7 +118,7 @@ services:
   cba:
     build:
       context: .
-      dockerfile: cba/Dockerfile
+      dockerfile: docker/Dockerfile.cba
     container_name: cba
     hostname: cba
     restart: always

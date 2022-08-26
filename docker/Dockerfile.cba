@@ -1,0 +1,14 @@
+
+FROM python:3
+
+WORKDIR /app
+
+ADD SCIM-Notify-demo/app/AMQP.py .
+ADD protocols/SCIM.py .
+
+ADD cba/__main__.py .
+ADD cba/requirements.txt .
+
+RUN pip install -r requirements.txt
+
+CMD ["python3", "."]

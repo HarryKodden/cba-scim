@@ -1,0 +1,29 @@
+@startuml
+
+database "SRAM-LDAP" {
+  [Service Data]
+}
+
+package [CBA] {
+  [SCIM Client]
+}
+
+package [SRAM] {
+  [Cronjob]
+}
+
+package [SCIM-Service] {
+  [SCIM Server]
+
+  database "MongoDB" {
+    [SCIM Data]
+  }
+}
+
+[Cronjob] <-- [SCIM Server]: [1a] Read
+[Cronjob] <-- [Service Data]: [1b] Read
+[Cronjob] --> [SCIM Server]: [2a] Update
+[SCIM Server] <-> [SCIM Data]: [2b]
+[Cronjob] ..> [SCIM Client]: [2c] Notification on updates
+[SCIM Client] <-- [SCIM Server] : [3] Read Users / Groups
+@enduml

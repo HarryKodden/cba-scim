@@ -80,8 +80,10 @@ class SCIM(object):
       else:
         self.stats['writes'] += 1
 
-      result = json.loads(response.text)
-      logger.debug(result)
+      result = {}
+      if len(response.content) > 0:
+        result = json.loads(response.content)
+
       return result
 
     except requests.exceptions.SSLError:

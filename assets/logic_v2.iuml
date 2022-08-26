@@ -1,0 +1,46 @@
+@startuml
+
+database sram_ldap
+control cronjob as job
+
+entity SCIM as "SCIM"
+entity CBA as "CBA"
+
+CBA <-- SCIM: GET  https://scim.example.com/Users
+CBA <-- SCIM: GET  https://scim.example.com/Groups
+
+group cronjob [ interval based execution]
+  job <-- sram_ldap: Read actual Groups and Users details
+  job <-- SCIM: GET  https://scim.example.com/Users
+  job <-- SCIM: GET  https://scim.example.com/Groups
+
+    loop for each CBA user: {__U__}
+      alt not exists (anymore) in LDAP
+      job -> SCIM: PATCH https://scim.example.com/Users/{__U__} { 'active': False }
+      job --> CBA: Notify /Users/__U__
+      SCIM <- CBA: Get https://scim.example.com/Users/__U__ 
+      end
+    end
+
+    loop for each CBA group: {__G__}
+      alt not exists (anymore) in LDAP
+      job -> SCIM: DELETE https://scim.example.com/Groups/{__G__}
+      job --> CBA: Notify
+      SCIM <- CBA: Get https://scim.example.com/Groups 
+      end
+    end
+
+    loop for each LDAP user {__U__} "Create/Update"
+      job -> SCIM: POST https://scim.example.com/Users { .. user attributes ..}
+      job --> CBA: Notify
+      SCIM <- CBA: Get https://scim.example.com/Users/__U__ 
+    end
+
+    loop for each LDAP Group {__G__} "Create/Udate Members"
+      job -> SCIM: POST https://scim.example.com/Users { .. members ..}
+      job --> CBA: Notify
+      SCIM <- CBA: Get https://scim.example.com/Groups/__G__ 
+    end
+end
+
+@enduml

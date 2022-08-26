@@ -1,0 +1,21 @@
+
+FROM ubuntu:latest AS builder
+
+RUN apt update
+RUN apt install -y apt-transport-https locales ca-certificates vim
+RUN apt install -y rsyslog  openssh-server pamtester libcurl4-gnutls-dev
+RUN apt install -y libsasl2-dev libldap2-dev ldap-utils 
+RUN apt install -y python3 python3-pip
+
+# Add SRAM logic
+COPY sram /root/sram
+RUN pip install -r /root/sram/requirements.txt
+RUN chmod o+x /root/sram/entrypoint.sh
+
+# Add protocols
+ADD ./SCIM-Notify-demo/app/broker.py /root/sram/
+ADD protocols/LDAP.py /root/sram/
+ADD protocols/SCIM.py /root/sram/
+
+# Done !
+ENTRYPOINT ["/root/sram/entrypoint.sh"]
