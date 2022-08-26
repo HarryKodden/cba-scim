@@ -173,7 +173,7 @@ class SCIM(object):
 
   def get_user(self, id):
     user = self.request(f"/Users/{id}")
-    self.groups[user['userName']] = user
+    self.users[user['userName']] = user
     return user
 
   def set_user(self, userName, updates):

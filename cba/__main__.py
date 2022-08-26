@@ -25,13 +25,13 @@ if __name__ == "__main__":
 
       def user(id):
         logger.info(f"[USER:{id}] Notification received !")
-        my_scim.get_user(id)
-        logger.info(my_scim)
+        u = my_scim.get_user(id)
+        logger.info(u)
 
       def group(id):
         logger.info(f"[GROUP:{id}] Notification received !")
-        my_scim.get_group(id)
-        logger.info(my_scim)
+        g = my_scim.get_group(id)
+        logger.info(g)
 
       AMQP(os.environ['URI']).subscribe({
           'user': user,
