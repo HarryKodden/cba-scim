@@ -157,11 +157,12 @@ class SCIM(object):
                   "op": "add",
                   "path": "members",
                   "value": [{
-                      "value": f"{member}"
+                      "value": f"{member}",
+                      "display": self.get_user(m)['externalId']
                   }]
               })
 
-      self.groups[groupName]['members'] = [ { 'value': m } for m in new_members ]
+      self.groups[groupName]['members'] = [ { 'value': m, 'display': self.get_user(m)['externalId'] } for m in new_members ]
 
       if len(patches['Operations']) > 0:
           self.request(self.groups[groupName]['meta']['location'], method='PATCH', payload=patches)
@@ -312,7 +313,7 @@ class SCIM(object):
                   "urn:scim:schemas:core:1.0"
               ],
               "displayName": f"{groupName}",
-              "members": [ { 'value': m } for m in members ]
+              "members": [ { 'value': m, 'display': self.get_user(m)['externalId'] } for m in members ]
         }
       )
 
